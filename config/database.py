@@ -1,42 +1,42 @@
+import os
+import certifi
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
-import os
-import certifi
 
-# Load the library so that the variable in the .env can have a direct connection
+# Load environment variables from .env file
 load_dotenv()
 
-# MongoDB configuration on environment variable
+# MongoDB connection string from environment variable
 uri = os.getenv('MONGODB_URL')
 
 if not uri:
-    raise ValueError("MONGODB_URL not found in .env file")
+    raise ValueError("MONGODB_URL not found in environment variables")
 
-# Start the MongoDB Atlas on Localhost
-# client = MongoClient(uri, server_api=ServerApi('1'))
-
-# On production in Render
+# MongoDB Client Configuration
+# Using certifi for SSL/TLS certificates and allowing invalid certificates 
+# to ensure compatibility with Render's environment
 client = MongoClient(
-     uri,
-     tls=True,
-     tlsCAFile=certifi.where(),
-     tlsAllowInvalidCertificates=True 
+    uri,
+    tls=True,
+    tlsCAFile=certifi.where(),
+    tlsAllowInvalidCertificates=True,
+    server_api=ServerApi('1')
 )
 
-# MongoDB Database
-db = client[os.environ["MONGODB_DB"]]     
+# Database and Collection configuration with fallbacks
+db_name = os.getenv("MONGODB_DB", "python_fastapi")
+collection_name = os.getenv("MONGODB_COLLECTION", "films")
 
-# Collection 
-collection = db[os.environ["MONGODB_COLLECTION"]]      
+db = client[db_name]
+collection = db[collection_name]
 
 def ping_db():
     try:
-        # Send a ping to confirm a successful connection
         client.admin.command('ping')
-        print("Connected to MongoDB successfully!")
+        print(f"Successfully connected to MongoDB: {db_name} -> {collection_name}")
     except Exception as e:
-        print(f"Error connecting: {e}")
+        print(f"Error connecting to MongoDB: {e}")
 
-# Execute ping check
+
 ping_db()
