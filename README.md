@@ -40,18 +40,17 @@ Unlike previous versions that used volatile RAM storage, this API is now integra
 4. **Run the Server:**
    ```bash
    python main.py
-🌐 Deployment
+## 🌐 Deployment
+
 The API is live on Render.
 
-Live Endpoint: https://filmes-backend-pal2.onrender.com/films
+*Live Endpoint*: https://filmes-backend-pal2.onrender.com/films
 
-Production Command: uvicorn main:app --host 0.0.0.0 --port $PORT
+*Production Command*: uvicorn main:app --host 0.0.0.0 --port $PORT
 
-🔒 Security Configuration
+## 🔒 Security Configuration
+
 To ensure a stable connection between Render and MongoDB Atlas, the project implements:
-
 tlsCAFile via certifi to handle SSL certificate verification.
-
 tlsAllowInvalidCertificates for environment compatibility.
-
 CORS Middleware configured for Vercel (Frontend) integration.
