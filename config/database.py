@@ -14,7 +14,12 @@ if not uri:
     raise ValueError("MONGODB_URL not found in .env file")
 
 # Start the MongoDB Atlas
-client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+client = MongoClient(
+    uri,
+    tls=True,
+    tlsCAFile=certifi.where(),
+    tlsAllowInvalidCertificates=True 
+)
 
 # MongoDB Database
 db = client[os.environ["MONGODB_DB"]]     
