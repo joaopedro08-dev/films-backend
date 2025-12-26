@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 import os
-import certifi
+# import certifi
 
 # Load the library so that the variable in the .env can have a direct connection
 load_dotenv()
@@ -14,12 +14,15 @@ if not uri:
     raise ValueError("MONGODB_URL not found in .env file")
 
 # Start the MongoDB Atlas
-client = MongoClient(
-    uri,
-    tls=True,
-    tlsCAFile=certifi.where(),
-    tlsAllowInvalidCertificates=True 
-)
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+# On production in Render
+# client = MongoClient(
+#     uri,
+#     tls=True,
+#     tlsCAFile=certifi.where(),
+#     tlsAllowInvalidCertificates=True 
+# )
 
 # MongoDB Database
 db = client[os.environ["MONGODB_DB"]]     
