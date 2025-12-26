@@ -29,5 +29,4 @@ def ping_db():
     except Exception as e:
         print(f"Error connecting: {e}")
 
-# Execute ping check
 ping_db()
