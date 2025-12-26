@@ -50,7 +50,8 @@ The API is live on Render.
 
 ## 🔒 Security Configuration
 
-To ensure a stable connection between Render and MongoDB Atlas, the project implements:
-tlsCAFile via certifi to handle SSL certificate verification.
-tlsAllowInvalidCertificates for environment compatibility.
-CORS Middleware configured for Vercel (Frontend) integration.
+To ensure a stable connection between **Render** and **MongoDB Atlas**, the project implements:
+
+* tlsCAFile via certifi to handle SSL certificate verification.
+* tlsAllowInvalidCertificates for environment compatibility.
+* CORS Middleware configured for Vercel (Frontend) integration.
