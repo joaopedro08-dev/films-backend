@@ -2,6 +2,8 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 import os
+import certifi
+ca = certifi.where()
 
 # Load the library so that the variable in the .env can have a direct connection
 load_dotenv()
@@ -13,7 +15,7 @@ if not uri:
     raise ValueError("MONGODB_URL not found in .env file")
 
 # Start the MongoDB Atlas
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=ca)
 
 # MongoDB Database
 db = client[os.environ["MONGODB_DB"]]     
@@ -29,4 +31,5 @@ def ping_db():
     except Exception as e:
         print(f"Error connecting: {e}")
 
+# Execute ping check
 ping_db()
